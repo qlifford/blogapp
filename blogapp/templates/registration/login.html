@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} MyBlog | Login {% endblock %}
+   {% block content %}
+   <center>
+      <h1>Login</h1>
+      <div class="form-group w-50">
+         <form method="POST">{% csrf_token %}
+               <input type="text" class="form-control mb-3" name="username" placeholder="Enter username">
+               <input type="password" class="form-control mb-3" name="password" placeholder="Enter password">
+            <button class="btn btn-primary" type="submit">Login</button>
+         </form>
+      </div>
+   </center>
+   {% endblock %}

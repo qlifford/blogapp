@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+      <div class="card w-100" style="width: 100%; border: none;">
+          <img style="width: 8rem;" src="{{ blog.image.url }}" class="card-img-top" alt="IMAGE">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ blog.title | capfirst }}</strong></h5>
+            <div class="" style="color: gray;">
+              Posted by: <strong>{{ blog.author | capfirst }}</strong> |
+              On: {{ blog.date }}<strong></strong></div>
+            <p class="card-text">{{ blog.text }}</p>
+            {% if request.user.is_authenticated %}
+              {% if blog.user == request.user %}
+              <div class="">
+                    <a style="color:red" href="{% url 'delete' blog.id %}">Delete</a> |
+                    <a style="color:blue" href="">Update</a>
+                    </div>
+              {% endif %}
+            {% endif %}
+          </div>
+          <div>
+            <a href="">Like</a> |
+            <a href="">Reply</a>
+          </div>
+          <button class="btn"><a href="{% url 'index' %}">Back</a></button>
+      </div><hr>
+  </div>
+</div>
+{% endblock %}

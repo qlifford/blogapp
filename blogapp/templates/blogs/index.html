@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="">
+      <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form }}
+      <button type="submit" class="btn btn-danger">Post</button>
+      </form>
+    </div>
+  <hr>
+  <img src="{{ pic.image.url }}" alt="image">
+    {% for blog in blogs reversed %}
+          <div class="card-body ">
+            <h5 class="card-title"><strong>{{ blog.title | capfirst }}</strong></h5>
+            <div class="" style="color: gray;">
+              Posted by <strong>{{ blog.author | capfirst }} </strong>
+              on <strong>{{ blog.date }}</strong> |
+            </div>
+              <div class="">
+                {% if condition%}
+                  <p> Like</p>
+                {% else %}
+                  <p> Likes</p>
+                {% endif %}
+              <div class="">
+                  {% if request.user.is_authenticated %}
+                    <form action="" method="POST">{% csrf_token %}
+                      <a href="">Like</a>
+                      <a href="">Reply</a>
+                    </form>
+                  {% else %}
+                  <p>Please login</p>
+              {% endif %}
+              </div>
+            <p class="card-text">{{ blog.text | slice:":250" }}</p>
+            <a href="{% url 'detail' blog.id %}" class="btn btn-primary">More Details</a>
+            <div class="">
+            {% if request.user.is_authenticated %}
+              {% if blog.author == request.user %}
+                    <a style="color:red" href="{% url 'delete' blog.id %}">Delete</a> |
+                    <a style="color:blue" href="">Update</a>
+                    {% endif %}
+                    {% endif %}
+            </div>
+          </div><hr>
+      {% endfor %}
+  </div>
+</div>
+{% endblock %}
